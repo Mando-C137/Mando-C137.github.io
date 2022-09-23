@@ -26,7 +26,7 @@ const Projects = (props: Props) => {
           return (
             <motion.div
               key={project}
-              className='w-screen flex-shrink-0 snap-center flex flex-col space-y-5 items-center justify-center p-20 md:p-44 h-screen'>
+              className=' relative w-screen flex-shrink-0 snap-center flex flex-col space-y-5 items-center justify-center p-20 md:p-44 h-screen'>
               <motion.img
                 initial={{
                   y: -300,
@@ -40,7 +40,7 @@ const Projects = (props: Props) => {
                 viewport={{ once: true }}
                 src='/hero.png'
                 alt='my ass'
-                className='h-32 w-32 rounded-full object-cover'
+                className='h-32 w-32 rounded-full object-cover max-h-[50%]'
               />
               <div>
                 <h4 className='text-4xl font-semibold text-center'>

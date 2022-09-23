@@ -10,6 +10,8 @@ const Skills = (props: Props) => {
     "/skills/mysql.jpg",
     "/skills/react.png",
     "/skills/spring.png",
+    "/skills/spring.png",
+    "/skills/Uni_Mannheim_Siegel.png",
   ];
 
   return (
