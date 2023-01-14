@@ -1,19 +1,41 @@
-import type { NextPage } from "next";
+import { ArrowUpIcon } from "@heroicons/react/24/solid";
+import type { GetStaticProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
+import About from "../components/About";
+import ContactMe from "../components/ContactMe";
+import Experience from "../components/Experience";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
-import About from "../components/About";
-import Experience from "../components/Experience";
-import Skills from "../components/Skills";
 import Projects from "../components/Projects";
-import ContactMe from "../components/ContactMe";
-import Link from "next/link";
-import { ArrowUpIcon } from "@heroicons/react/24/solid";
+import Skills from "../components/Skills";
+import {
+  Experience as ExperienceType,
+  PageInfo,
+  Project,
+  Skill,
+  Social
+} from "../typings";
+import {
+  fetchExperience,
+  fetchPageInfo,
+  fetchProjects,
+  fetchSkills,
+  fetchSocials
+} from "../utils/fetchAPI";
 
-const Home: NextPage = () => {
+type Props = {
+  pageInfo: PageInfo;
+  experiences: ExperienceType[];
+  skills: Skill[];
+  projects: Project[];
+  socials: Social[];
+};
+
+const Home = ({ experiences, pageInfo, projects, skills, socials }: Props) => {
   return (
     <div
-      className='bg-[rgb(36,36,36)] text-white h-screen snap-y snap-mandatory 
+      className='bg-[rgb(36,36,36)] text-white h-screen snap-y snap-mandatory mt-0 
     overflow-y-scroll  overflow-x-hidden
     scrollbar 
     scrollbar-track-gray-400/20
@@ -23,40 +45,31 @@ const Home: NextPage = () => {
         <title>Pauls Portfolio</title>
       </Head>
 
-      <Header></Header>
+      <Header socials={socials}></Header>
 
       <section id='hero' className='snap-start'>
-        <Hero></Hero>
+        <Hero pageInfo={pageInfo}></Hero>
       </section>
 
-      {/* About*/}
+      
       <section id='about' className='snap-center'>
-        <About></About>
+        <About pageInfo={pageInfo}></About>
       </section>
       <section id='experience' className='snap-center'>
-        <Experience></Experience>
+        <Experience experiences={experiences}></Experience>
       </section>
-      {/* Contacts*/}
-
-      {/* Skills*/}
 
       <section id='skills' className='snap-start'>
-        <Skills></Skills>
+        <Skills skills={skills}></Skills>
       </section>
-
-      {/* Projects*/}
 
       <section id='projects' className='snap-start'>
-        <Projects />
+        <Projects projects={projects} />
       </section>
-
-      {/* Contact*/}
 
       <section id='contact' className='snap-start'>
-        <ContactMe />
-      </section>
-
-      {/* <h1 className='text-blue-500'>Lets build an amazing portfolio</h1> */}
+        <ContactMe pageInfo={pageInfo} />
+      </section> 
 
       <Link href='#hero'>
         <footer className='sticky bottom-2 w-full cursor-pointer '>
@@ -65,9 +78,32 @@ const Home: NextPage = () => {
             <ArrowUpIcon className='h-6 w-6 ' />
           </div>
         </footer>
-      </Link>
+      </Link> 
     </div>
   );
 };
 
 export default Home;
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const pageInfo: PageInfo = await fetchPageInfo();
+
+  const experiences: ExperienceType[] = await fetchExperience();
+
+  const projects: Project[] = await fetchProjects();
+
+  const socials: Social[] = await fetchSocials();
+
+  const skills: Skill[] = await fetchSkills();
+
+  return {
+    props: {
+      pageInfo,
+      experiences,
+      projects,
+      socials,
+      skills,
+    },
+    revalidate: 50,
+  };
+};

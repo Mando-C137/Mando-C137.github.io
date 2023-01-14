@@ -1,12 +1,15 @@
-import React from "react";
 import { motion } from "framer-motion";
-type Props = {};
+import { urlFor } from "../sanity";
+import { Experience } from "../typings";
+import { formatDates } from "../utils/getFormattedDate";
 
-const ExperienceCard = (props: Props) => {
+type Props = { experience: Experience };
+
+const ExperienceCard = ({ experience }: Props) => {
   return (
     <article
       className=' relative snap-center flex flex-col rounded-lg items-center space-y-7 flex-shrink-0
-    w-[500px] md:w-[600px] xl:w-[900px] p-10 bg-[#292929] opacity-40 hover:opacity-100 focus:opacity-100 cursor-pointer 
+    w-[300px] md:w-[600px] xl:w-[900px] p-8 bg-[#292929] opacity-70 hover:opacity-100 focus:opacity-100 cursor-pointer 
     overflow-auto overflow-y-auto overflow-x-hidden
    scrollbar-thin scrollbar-thumb-primary '>
       <motion.img
@@ -24,59 +27,36 @@ const ExperienceCard = (props: Props) => {
           opacity: 1,
           y: 0,
         }}
-        // className='w-32 h-3 rounded-full xl:[w-200px] xl:h-[200px] object-cover object-center'
-        className=' max-h-[20%] aspect-square object-left rounded-full xl:[w-200px] xl:h-[200px] object-cover '
-        src='/skills/unima.png'></motion.img>
+        className=' aspect-square object-left rounded-full h-28  xl:[w-200px] xl:h-[200px] object-cover '
+        src={urlFor(experience.companyImage).url()}></motion.img>
 
       <div className='px-0 md:px-10'>
-        <h4 className='text-4xl font-light'>Student</h4>
-        <p className='font-bold text-3xl mt-1'>Universität Mannheim</p>
+        <h4 className=' text-2xl md:text-4xl font-light break-words'>{experience.jobTitle}</h4>
+        <p className='font-bold text-xl md:text-3xl mt-1'>{experience.company}</p>
         <div className='flex flex-row space-x-2 my-2'>
-          <img
-            className='h-10 w-10 rounded-full object-cover object-center'
-            src='/hero.png'
-            alt='myass'
-          />
-
-          <img
-            className='h-10 w-10 rounded-full object-cover object-center'
-            src='/hero.png'
-            alt='myass'
-          />
-          <img
-            className='h-10 w-10 rounded-full object-cover object-center'
-            src='/hero.png'
-            alt='myass'
-          />
+          {experience.technologies.map((tech) => {
+            return (
+              <img
+                className='h-10 w-10 rounded-full object-cover object-center'
+                src={urlFor(tech.image).url()}
+                alt={tech.title}
+                key={tech._id}
+              />
+            );
+          })}
         </div>
-        <p className='uppercase py-5 text-gray-300'>08/19 - 07/22</p>
+        <p className='uppercase py-5 text-gray-300'>
+          {formatDates(
+            experience.dateStarted,
+            experience.dateEnded,
+            experience.isCurrentlyWorkingHere
+          )}
+        </p>
 
         <ul className='list-disc space-y-4 ml-5 text-lg'>
-          <li>
-            Learned the basics of Comupter Science, datastructures and
-            algoritihms etc..
-          </li>
-          <li>Learned the Java Programming Language intensively</li>
-          <li>
-            During free time, I also spent my time in Web development namely
-            React
-          </li>
-          <li>
-            During free time, I also spent my time in Web development namely
-            React
-          </li>
-          <li>
-            During free time, I also spent my time in Web development namely
-            React
-          </li>
-          <li>
-            During free time, I also spent my time in Web development namely
-            React
-          </li>
-          <li>
-            During free time, I also spent my time in Web development namely
-            React
-          </li>
+          {experience.points.map((point, i) => (
+            <li key={i}>{point}</li>
+          ))}
         </ul>
       </div>
     </article>
