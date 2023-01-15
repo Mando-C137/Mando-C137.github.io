@@ -17,6 +17,7 @@ const Skill = ({ skill }: Props) => {
         className='rounded-full object-cover w-24 h-24 border-gray-500
       xl:w-32 xl:h-32 md:h-28 md:w-28 filter group-hover:grayscale transition duration-300 ease-in-out'
         src={urlFor(skill.image).url()}
+        alt={skill._id}
       />
 
       <div

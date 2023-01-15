@@ -1,66 +1,38 @@
 import { Experience, PageInfo, Project, Skill, Social } from "../typings";
+import getExperience from "./api/getExperience";
+import getPageInfo from "./api/getPageInfo";
+import getProjects from "./api/getProjects";
+import getSkills from "./api/getSkills";
+import getSocials from "./api/getSocials";
 
-const fetchSkills = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getSkills`);
+const fetchSkills = async () : Promise<Skill[]> => {
+  const res = await getSkills();
 
-  const data = await res.json();
-
-  const skills: Skill[] = data.skills;
-
-  return skills;
+  return res;
 };
 
 const fetchExperience = async (): Promise<Experience[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getExperience`
-  );
+  const res = await getExperience();
 
-  const data = await res.json();
-
-  const experiences: Experience[] = data.experiences;
-
-  //   console.log("fetching", experiences);
-
-  return experiences;
+  return res;
 };
 
 const fetchProjects = async (): Promise<Project[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getProjects`
-  );
+  const res = await getProjects();
 
-  const data = await res.json();
-
-  const projects: Project[] = data.projects;
-
-  //   console.log("fetching", experiences);
-
-  return projects;
+  return res;
 };
 
 const fetchSocials = async (): Promise<Social[]> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getSocials`);
+  const res = await getSocials();
 
-  const data = await res.json();
-
-  const socials: Social[] = data.socials;
-
-  //   console.log("fetching", experiences);
-
-  return socials;
+  return res;
 };
 
 const fetchPageInfo = async (): Promise<PageInfo> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/getPageInfo`
-  );
+  const res = await getPageInfo();
 
-  const data = await res.json();
-  const pageInfo: PageInfo = data.pageInfo;
-
-  //   console.log("fetching", experiences);
-
-  return pageInfo;
+  return res;
 };
 
 export {
@@ -70,3 +42,4 @@ export {
   fetchProjects,
   fetchSocials,
 };
+
