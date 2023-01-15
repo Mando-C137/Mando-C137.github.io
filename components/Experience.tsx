@@ -15,8 +15,6 @@ const Experience = ({ experiences }: Props) => {
         Experience
       </h3>
 
-      <h2>asdf</h2>
-
       <div
         className='w-full max-h-screen flex flex-row space-x-4 overflow-x-scroll p-10  snap-x snap-mandatory 
       scrollbar relative
